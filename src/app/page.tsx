@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { CardList, Modal, FormUpdate, ValidationForm, SearchInput } from "@/components";
-
+import useLocalStorage from "@/components/localStorage";
 export interface User {
   id: string;
   username: string;
@@ -12,38 +12,32 @@ export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectCard, setSelectCard] = useState("");
   const [search, setSearch] = useState("");
+  const [localUsers,setLocalUsers] = useLocalStorage ("localUsers",[])
 
-  // Function to load data from local storage
-  const loadDataFromLocalStorage = () => {
-    const savedData = localStorage.getItem("myData");
-    if (savedData) {
-      setUsers(JSON.parse(savedData));
-    }
-  };
-
-  // useEffect to load data from local storage on component mount
-  useEffect(() => {
-    loadDataFromLocalStorage();
-  }, []);
-
-  // useEffect to save data to local storage whenever 'users' state changes
-  useEffect(() => {
-    localStorage.setItem("myData", JSON.stringify(users));
-  }, [users]);
-
-  const selectedUser = users.find((user) => user.id === selectCard);
+  const selectedUser = localUsers.find((user:any) => user.id === selectCard);
 
   const handleDeleteCard = (id: string) => {
-    const deleteItem = users.filter((user) => user.id !== id);
-    setUsers(deleteItem);
-  };
+  //   const deleteItem = localUsers.filter((item: { id: string; }) => {});
+  //   setUsers(deleteItem);
+  // };
 
+  const updatedLocalUsers = localUsers.filter((item:any) => item.id !== id);
+
+  // Update the local state
+  setLocalUsers(updatedLocalUsers);
+
+  // Update local storage
+  localStorage.setItem("localUsers", JSON.stringify(updatedLocalUsers));
+    console.log(localUsers)
+  };
+console.log(localUsers)
   return (
     <div className="inline-block items-center justify-center mx-auto w-full">
       <SearchInput setSearch={setSearch} />
+
       <CardList
         onDeleteCard={handleDeleteCard}
-        items={users}
+        items={localUsers}
         selectCard={selectCard}
         onSelectCard={setSelectCard}
         search={search}
@@ -52,7 +46,7 @@ export default function Home() {
         {selectedUser ? (
           <FormUpdate selectedUser={selectedUser} updateUser={setUsers} />
         ) : (
-          <ValidationForm addNewUser={setUsers} />
+          <ValidationForm addNewUser={setUsers} localAddNewUser={setLocalUsers} />
         )}
       </Modal>
     </div>

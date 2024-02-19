@@ -6,9 +6,12 @@ import { Input } from "./Input";
 
 interface FormAddProps {
   addNewUser: React.Dispatch<SetStateAction<User[]>>;
+  // newUsers?: Array<User[]>
+    localAddNewUser: React.Dispatch<SetStateAction<User[]>>;
+
 }
 
-const ValidationForm = ({ addNewUser }: FormAddProps) => {
+const ValidationForm = ({ localAddNewUser, addNewUser }: FormAddProps) => {
   const [user, setUser] = useState({
     id: "",
     username: "",
@@ -42,8 +45,8 @@ const ValidationForm = ({ addNewUser }: FormAddProps) => {
 
       const newId = Math.random().toString(36).substring(2, 8); // return 1f74e
       const newUser = { ...user, id: newId };
-      addNewUser((preUsers:any) => [...preUsers, newUser])
-   
+      localAddNewUser((prev:any) => [...prev,newUser])
+      addNewUser((prev:any) => [...prev,newUser])
     } catch (error) {
       console.log("error", error);
       const fieldErrors: { [key: string]: string } = {};
