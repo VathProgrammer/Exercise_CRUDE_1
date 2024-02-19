@@ -1,6 +1,6 @@
-"use client";
-import React, { createContext, useContext, useState } from "react";
-import { CardList,Modal,FormUpdate,ValidationForm,SearchInput, Card } from "@/components";
+"use client"
+import React, { useEffect, useState } from "react";
+import { CardList, Modal, FormUpdate, ValidationForm, SearchInput } from "@/components";
 
 export interface User {
   id: string;
@@ -11,19 +11,32 @@ export interface User {
 export default function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [selectCard, setSelectCard] = useState("");
-  const selectedUser = users.filter((user) => {
-    if (user.id === selectCard) {
-      return user;
+  const [search, setSearch] = useState("");
+
+  // Function to load data from local storage
+  const loadDataFromLocalStorage = () => {
+    const savedData = localStorage.getItem("myData");
+    if (savedData) {
+      setUsers(JSON.parse(savedData));
     }
-  });
-  const [search,setSearch] = useState ('')
-
-
-  const handleDeleteCard = (id: string) => {
-    const deleteItem = users.filter((users) => users.id !== id);
-    setUsers(deleteItem);
   };
 
+  // useEffect to load data from local storage on component mount
+  useEffect(() => {
+    loadDataFromLocalStorage();
+  }, []);
+
+  // useEffect to save data to local storage whenever 'users' state changes
+  useEffect(() => {
+    localStorage.setItem("myData", JSON.stringify(users));
+  }, [users]);
+
+  const selectedUser = users.find((user) => user.id === selectCard);
+
+  const handleDeleteCard = (id: string) => {
+    const deleteItem = users.filter((user) => user.id !== id);
+    setUsers(deleteItem);
+  };
 
   return (
     <div className="inline-block items-center justify-center mx-auto w-full">
@@ -35,19 +48,11 @@ export default function Home() {
         onSelectCard={setSelectCard}
         search={search}
       />
-
-      {/* <cardCotext.Provider value={}>
-          <Card/>
-      </cardCotext.Provider> */}
       <Modal selectCard={selectCard}>
-        {selectedUser.length > 0 ? (
-          <>
-            <FormUpdate selectedUser={selectedUser[0]} updateUser={setUsers} />
-          </>
+        {selectedUser ? (
+          <FormUpdate selectedUser={selectedUser} updateUser={setUsers} />
         ) : (
-          <>
-            <ValidationForm addNewUser={setUsers} />
-          </>
+          <ValidationForm addNewUser={setUsers} />
         )}
       </Modal>
     </div>

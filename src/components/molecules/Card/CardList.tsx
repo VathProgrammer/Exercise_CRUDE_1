@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import { Card } from "./Card";
 import { User } from "@/app/page";
 
@@ -18,12 +19,13 @@ const CardList = ({
   search,
 }: CardListProps) => {
   console.log(search);  
+ 
   return (
     <div>
       {
           search ?(
           items.map((item,index) =>(
-           item.username.includes(search) ?(
+           item.username.includes(search)?(
               <Card
               id={item.id}
               name={item.username}

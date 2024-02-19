@@ -35,8 +35,8 @@ const Card: React.FC<CardProps> = ({
       }}
       className={
         selectCard === id
-          ? "flex justify-between items-start w-[620px] bg-gray-400 text-white  m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg "
-          : "flex justify-between items-start w-[620px]  m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg hover:bg-gray-200"
+          ? "flex justify-between items-center w-[620px] h-[80px]  bg-gray-400 text-white  m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg "
+          : "flex justify-between items-center w-[620px] h-[80px] m-auto mt-5 px-3 border border-[#d6c2e7] rounded-lg hover:bg-gray-200"
       }
     >
       <div className="flex flex-row justify-center gap-2">
@@ -51,7 +51,7 @@ const Card: React.FC<CardProps> = ({
         </div>
         <div className="flex flex-col gap-0">
           <p className="text-base text-[#33363F] font-sans ">{name}</p>
-              <Link href={`/pages/users/${name.trim()}`} as={`/pages/users/${name.trim()}`} className="text-xs text-[#00000] opacity-[60%] font-sans p-1 hover:bg-cyan-900 ">
+              <Link href={`/pages/users/${name}`} as={`/pages/users/${name}`} className="text-xs text-[#00000] opacity-[60%] font-sans p-1 hover:bg-cyan-900 ">
              Preveiw
           </Link>
         </div>

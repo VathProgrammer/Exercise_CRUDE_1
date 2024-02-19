@@ -42,7 +42,8 @@ const ValidationForm = ({ addNewUser }: FormAddProps) => {
 
       const newId = Math.random().toString(36).substring(2, 8); // return 1f74e
       const newUser = { ...user, id: newId };
-      addNewUser((preUsers:any) => [...preUsers, newUser]);
+      addNewUser((preUsers:any) => [...preUsers, newUser])
+   
     } catch (error) {
       console.log("error", error);
       const fieldErrors: { [key: string]: string } = {};
@@ -85,9 +86,9 @@ const ValidationForm = ({ addNewUser }: FormAddProps) => {
   };
 
   return (
-    <InputForm className="px-10 py-5 bg-white" onSubmit={handleOnSubmit}>
+    <InputForm className="px-1 py-5" onSubmit={handleOnSubmit}>
       <Input
-        className="text-black border rounded-md border-black m-2 focus:ring-2 outline-none px-5 py-2"
+        className="text-black border rounded-md border-black m-2 focus:ring-2 outline-none px-2  py-2"
         type="text"
         name="username"
         value={user.username}
@@ -98,7 +99,7 @@ const ValidationForm = ({ addNewUser }: FormAddProps) => {
       />
 
       <Input
-        className="text-black"
+        className="h-32 bg-gray-500 flex justify-center items-center mt-3"
         type="file"
         name="profile"
         placeholder="profile"
