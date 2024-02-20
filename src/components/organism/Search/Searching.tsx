@@ -1,5 +1,5 @@
 "use client"
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction } from 'react'
 
 const SearchInput = ({setSearch}:{setSearch:React.Dispatch<SetStateAction<string>>}) => {
   

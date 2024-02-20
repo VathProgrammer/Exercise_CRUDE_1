@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { CardList, Modal, FormUpdate, ValidationForm, SearchInput } from "@/components";
-import useLocalStorage from "@/components/localStorage";
+import useLocalStorage from "@/localStorage";
 export interface User {
   id: string;
   username: string;
@@ -14,12 +14,8 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [localUsers,setLocalUsers] = useLocalStorage ("localUsers",[])
 
-  const selectedUser = localUsers.find((user:any) => user.id === selectCard);
 
   const handleDeleteCard = (id: string) => {
-  //   const deleteItem = localUsers.filter((item: { id: string; }) => {});
-  //   setUsers(deleteItem);
-  // };
 
   const updatedLocalUsers = localUsers.filter((item:any) => item.id !== id);
 
@@ -30,6 +26,8 @@ export default function Home() {
   localStorage.setItem("localUsers", JSON.stringify(updatedLocalUsers));
     console.log(localUsers)
   };
+  const selectedUser = localUsers.find((user:any) => user.id === selectCard);
+
 console.log(localUsers)
   return (
     <div className="inline-block items-center justify-center mx-auto w-full">

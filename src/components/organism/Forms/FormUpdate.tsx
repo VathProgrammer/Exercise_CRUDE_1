@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import { User } from "@/app/page";
 import React, { Dispatch, SetStateAction, useState } from "react";
 
 interface FormAddProps {
   updateUser: Dispatch<SetStateAction<User[]>>;
   selectedUser: User;
+  // setLocalUpdateUsers?: Dispatch<SetStateAction<User []>>
 }
-
-const FormUpdate: React.FC<FormAddProps> = ({ selectedUser, updateUser }) => {
+  
+ const FormUpdate: React.FC<FormAddProps> = ({ selectedUser, updateUser }) => {
   const [user, setUser] = useState({
     username: selectedUser.username,
     profile: selectedUser.profile,
@@ -98,4 +100,5 @@ const FormUpdate: React.FC<FormAddProps> = ({ selectedUser, updateUser }) => {
   );
 };
 
-export { FormUpdate };
+
+export {FormUpdate}

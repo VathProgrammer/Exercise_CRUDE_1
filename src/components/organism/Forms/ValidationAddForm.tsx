@@ -1,7 +1,7 @@
 import { User } from "@/app/page";
 import React, { SetStateAction, useState } from "react";
 import { InputForm } from "./InputForm"; // Assuming these are correctly imported
-import { userSchema } from "@/components/validations/Scema";
+import { userSchema } from "@/validations/Scema";
 import { Input } from "./Input";
 
 interface FormAddProps {
@@ -30,7 +30,7 @@ const ValidationForm = ({ localAddNewUser, addNewUser }: FormAddProps) => {
       console.log("Error", error);
       setErrors((prev) => ({ ...prev, [name]: error.message }));
     }
-  };
+  };  
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

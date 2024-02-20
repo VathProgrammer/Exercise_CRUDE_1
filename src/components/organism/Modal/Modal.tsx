@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
 import { motion } from "framer-motion";
-import { FloatingButton } from "@/components/atoms";
+import { FloatingButton } from "../Button";
 interface ModalProps {
   children?: ReactNode;
   selectCard: string;

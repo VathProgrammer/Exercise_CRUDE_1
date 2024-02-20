@@ -27,5 +27,5 @@ const useLocalStorage = (key: string, initialValue: never[]) => {
 
   return [state, setValue]
 }
-
+  
 export default useLocalStorage
