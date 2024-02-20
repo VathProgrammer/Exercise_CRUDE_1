@@ -1,21 +1,19 @@
 import { User } from "@/app/page";
-import React, { SetStateAction, useState } from "react";
+import React, { ChangeEvent, SetStateAction, useState } from "react";
 import { InputForm } from "./InputForm"; // Assuming these are correctly imported
 import { userSchema } from "@/validations/Scema";
 import { Input } from "./Input";
 
 interface FormAddProps {
-  addNewUser: React.Dispatch<SetStateAction<User[]>>;
-  // newUsers?: Array<User[]>
   localAddNewUser: React.Dispatch<SetStateAction<User[]>>;
-
 }
 
-const ValidationForm = ({ localAddNewUser, addNewUser }: FormAddProps) => {
+const ValidationForm = ({ localAddNewUser }: FormAddProps) => {
   const [user, setUser] = useState({
     id: "",
     username: "",
-    profile: null as string | null
+    profile: null as string | null,
+    video: null as string | null
   });
   const [errors, setErrors] = useState({
     username: "",
@@ -46,7 +44,6 @@ const ValidationForm = ({ localAddNewUser, addNewUser }: FormAddProps) => {
       const newId = Math.random().toString(36).substring(2, 8); // return 1f74e
       const newUser = { ...user, id: newId };
       localAddNewUser((prev:any) => [...prev,newUser])
-      addNewUser((prev:any) => [...prev,newUser])
     } catch (error) {
       console.log("error", error);
       const fieldErrors: { [key: string]: string } = {};
@@ -88,6 +85,25 @@ const ValidationForm = ({ localAddNewUser, addNewUser }: FormAddProps) => {
     }
   };
 
+  const handleUpdloadVideo = (e:ChangeEvent<HTMLInputElement | HTMLFormElement>) =>{
+    const {name,files} = e.target;
+
+    const file = files && files[0]
+    if(!file) return 
+
+    if(file){
+      const videoUrl = URL.createObjectURL(file);
+      setUser((prev) =>{
+        return {
+          ...prev,
+          [name]: videoUrl
+        }
+      })
+    }
+  }
+
+  console.log(user.video)
+
   return (
     <InputForm className="px-1 py-5" onSubmit={handleOnSubmit}>
       <Input
@@ -111,6 +127,13 @@ const ValidationForm = ({ localAddNewUser, addNewUser }: FormAddProps) => {
         error={errors.profile}
       />
 
+      <Input
+        type="file"
+        name="video"
+        placeholder="video"
+        onChange={handleUpdloadVideo}
+        label="video" 
+      />
       <button className="px-10 py-1 bg-green-600 rounded-full mt-5" type="submit">
         Submit
       </button>

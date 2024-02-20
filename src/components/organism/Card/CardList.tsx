@@ -48,6 +48,7 @@ const CardList = ({
                 onSelectCard={onSelectCard}
                 selectCard={selectCard}
                 onDeleteCard={onDeleteCard}
+                video={item.video}
               ></Card>
             ) : null
           )
@@ -59,6 +60,7 @@ const CardList = ({
               image={item.profile}
               onSelectCard={onSelectCard}
               selectCard={selectCard}
+              video={item.video}
               onDeleteCard={onDeleteCard}
             ></Card>
           ))}

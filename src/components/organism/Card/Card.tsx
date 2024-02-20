@@ -7,6 +7,7 @@ interface CardProps {
   id: string;
   image: string;
   name: string;
+  video?: string
   selectCard: string | null;
   onSelectCard: React.Dispatch<React.SetStateAction<string>>;
   onDeleteCard: (id: string) => void
@@ -18,7 +19,8 @@ const Card: React.FC<CardProps> = ({
   image,
   selectCard,
   onSelectCard,
-  onDeleteCard
+  onDeleteCard,
+  video
 }: CardProps) => {
 
   return (
@@ -35,28 +37,33 @@ const Card: React.FC<CardProps> = ({
       }}
       className={
         selectCard === id
-          ? "flex justify-between items-center w-[620px] h-[80px]  bg-gray-400 text-white  m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg "
-          : "flex justify-between items-center w-[620px] h-[80px] m-auto mt-5 px-3 border border-[#d6c2e7] rounded-lg hover:bg-gray-200"
+          ? "flex justify-between items-center w-[620px] h-[140px]  bg-gray-400 text-white  m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg "
+          : "flex justify-between items-center w-[620px] h-[140px] m-auto mt-5 px-3 border border-[#d6c2e7] rounded-lg hover:bg-gray-200"
       }
     >
       <div className="flex flex-row justify-center gap-2">
         <div>
           <Image
             src={image}
-            width={45}
-            height={45}
-            className="border rounded-full"
+            width={100}
+            height={100}
+            className="bg-gray-400  border-2 border-gray-900 rounded-full"
             alt="User's Photo"
           ></Image>
         </div>
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-2 px-2">
           <p className="text-base text-[#33363F] font-sans ">{name}</p>
               <Link href={`/pages/users/${name}`} as={`/pages/users/${name}`} className="text-xs text-[#00000] opacity-[60%] font-sans p-1 hover:bg-cyan-900 ">
              Preveiw
           </Link>
         </div>
       </div>
+      <video className="rounded-md" width={250} height={180} controls>
+          <source src={video} type="video/mp4">
+          </source>
+        </video>
       <div>
+     
         <button  onClick={(e) => {onDeleteCard(id) 
         e.stopPropagation()}
       }>

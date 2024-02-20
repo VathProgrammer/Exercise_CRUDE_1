@@ -6,10 +6,10 @@ export interface User {
   id: string;
   username: string;
   profile: string;
+  video?: string;
 }
 
 export default function Home() {
-  const [users, setUsers] = useState<User[]>([]);
   const [selectCard, setSelectCard] = useState("");
   const [search, setSearch] = useState("");
   const [localUsers,setLocalUsers] = useLocalStorage ("localUsers",[])
@@ -44,7 +44,7 @@ console.log(localUsers)
         {selectedUser ? (
           <FormUpdate selectedUser={selectedUser} updateUser={setLocalUsers} />
         ) : (
-          <ValidationForm addNewUser={setUsers} localAddNewUser={setLocalUsers} />
+          <ValidationForm  localAddNewUser={setLocalUsers} />
         )}
       </Modal>
     </div>

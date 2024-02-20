@@ -10,7 +10,7 @@ interface InputProps {
   id?: string;
   value?: string;
   label?: string;
-  error: string;
+  error?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   defaultValue?: string
   accept?: string;
