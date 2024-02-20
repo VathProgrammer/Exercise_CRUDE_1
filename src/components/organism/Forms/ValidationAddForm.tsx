@@ -7,7 +7,7 @@ import { Input } from "./Input";
 interface FormAddProps {
   addNewUser: React.Dispatch<SetStateAction<User[]>>;
   // newUsers?: Array<User[]>
-    localAddNewUser: React.Dispatch<SetStateAction<User[]>>;
+  localAddNewUser: React.Dispatch<SetStateAction<User[]>>;
 
 }
 
@@ -36,7 +36,7 @@ const ValidationForm = ({ localAddNewUser, addNewUser }: FormAddProps) => {
     e.preventDefault();
 
     // Check if there is an error message for the profile
-    if (errors.profile) {
+    if (errors.profile || errors.username) {
       return;
     }
 

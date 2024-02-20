@@ -42,7 +42,7 @@ console.log(localUsers)
       />
       <Modal selectCard={selectCard}>
         {selectedUser ? (
-          <FormUpdate selectedUser={selectedUser} updateUser={setUsers} />
+          <FormUpdate selectedUser={selectedUser} updateUser={setLocalUsers} />
         ) : (
           <ValidationForm addNewUser={setUsers} localAddNewUser={setLocalUsers} />
         )}
