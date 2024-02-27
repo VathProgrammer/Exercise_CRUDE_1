@@ -1,14 +1,11 @@
-import { User } from "@/app/page";
-import React, { ChangeEvent, SetStateAction, useState } from "react";
+import React, { ChangeEvent, SetStateAction, useContext, useState } from "react";
 import { InputForm } from "./InputForm"; // Assuming these are correctly imported
 import { userSchema } from "@/validations/Scema";
 import { Input } from "./Input";
+import { userContext } from "@/context/UserProvider";
 
-interface FormAddProps {
-  localAddNewUser: React.Dispatch<SetStateAction<User[]>>;
-}
 
-const ValidationForm = ({ localAddNewUser }: FormAddProps) => {
+const AddForm = () => {
   const [user, setUser] = useState({
     id: "",
     username: "",
@@ -19,6 +16,8 @@ const ValidationForm = ({ localAddNewUser }: FormAddProps) => {
     username: "",
     profile: "",
   });
+  
+  const {handleAddUsers}:any = useContext(userContext)
 
   const validateForm = async (name: string, value: string | File) => {
     try {
@@ -41,9 +40,8 @@ const ValidationForm = ({ localAddNewUser }: FormAddProps) => {
     try {
       await userSchema.validate(user, { abortEarly: false });
 
-      const newId = Math.random().toString(36).substring(2, 8); // return 1f74e
-      const newUser = { ...user, id: newId };
-      localAddNewUser((prev:any) => [...prev,newUser])
+      handleAddUsers(user)
+     
     } catch (error) {
       console.log("error", error);
       const fieldErrors: { [key: string]: string } = {};
@@ -141,4 +139,4 @@ const ValidationForm = ({ localAddNewUser }: FormAddProps) => {
   );
 };
 
-export { ValidationForm };
+export { AddForm };

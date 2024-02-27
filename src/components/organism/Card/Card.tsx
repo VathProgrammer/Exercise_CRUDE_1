@@ -1,27 +1,20 @@
 "use client";
-import React from "react";
+import React,{useContext} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ContextApiProps } from "@/types";
+import {User} from "@/types"
+import { userContext } from "@/context/UserProvider";
 
-interface CardProps {
-  id: string;
-  image: string;
-  name: string;
-  video?: string
-  selectCard: string | null;
-  onSelectCard: React.Dispatch<React.SetStateAction<string>>;
-  onDeleteCard: (id: string) => void
-}
-
-const Card: React.FC<CardProps> = ({
+const Card = ({
   id,
-  name,
-  image,
-  selectCard,
-  onSelectCard,
-  onDeleteCard,
+  username,
+  profile,
   video
-}: CardProps) => {
+}: User) => {
+
+  const {selectCard}:any =  useContext(userContext);
+  const {setSelectCard,handleDeleteCard}:any  = useContext(userContext);
 
   return (
     //Card
@@ -29,10 +22,10 @@ const Card: React.FC<CardProps> = ({
       onClick={() => {
         // Unselect Card
         if (selectCard === id) {
-          onSelectCard("");
+          setSelectCard("");
         } else {
           // Select Card
-          onSelectCard(id);
+          setSelectCard(id);
         }
       }}
       className={
@@ -44,16 +37,16 @@ const Card: React.FC<CardProps> = ({
       <div className="flex flex-row justify-center gap-2">
         <div>
           <Image
-            src={image}
+            src={profile}
             width={100}
             height={100}
             className="bg-gray-400  border-2 border-gray-900 rounded-full"
-            alt="User's Photo"
+            alt="username's Photo"
           ></Image>
         </div>
         <div className="flex flex-col gap-2 px-2">
-          <p className="text-base text-[#33363F] font-sans ">{name}</p>
-              <Link href={`/pages/users/${name}`} as={`/pages/users/${name}`} className="text-xs text-[#00000] opacity-[60%] font-sans p-1 hover:bg-cyan-900 ">
+          <p className="text-base text-[#33363F] font-sans ">{username}</p>
+              <Link href={`/pages/usernames/${username}`} as={`/pages/usernames/${username}`} className="text-xs text-[#00000] opacity-[60%] font-sans p-1 hover:bg-cyan-900 ">
              Preveiw
           </Link>
         </div>
@@ -64,7 +57,7 @@ const Card: React.FC<CardProps> = ({
         </video>
       <div>
      
-        <button  onClick={(e) => {onDeleteCard(id) 
+        <button  onClick={(e) => {handleDeleteCard(id) 
         e.stopPropagation()}
       }>
         <i>

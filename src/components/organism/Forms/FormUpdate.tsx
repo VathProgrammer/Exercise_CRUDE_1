@@ -1,19 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { User } from "@/app/page";
+import { User } from "@/types";
 import { userSchema } from "@/validations/Scema";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { InputForm } from "./InputForm";
 import { Input } from "./Input";
 import Image from "next/image";
+import { userContext } from "@/context/UserProvider";
 
-interface FormAddProps {
-  updateUser: Dispatch<SetStateAction<User[]>>;
-  selectedUser: User;
-  // setLocalUpdateUsers?: Dispatch<SetStateAction<User []>>
-}
 
-const FormUpdate: React.FC<FormAddProps> = ({ selectedUser, updateUser }) => {
+
+const FormUpdate: React.FC = () => {
+  
+  const {handleUpdateUsers}:any = useContext(userContext)
+  const {selectedUser}:any = useContext(userContext)
+
   const [user, setUser] = useState({
     username: selectedUser.username,
     profile: selectedUser.profile,
@@ -24,6 +25,7 @@ const FormUpdate: React.FC<FormAddProps> = ({ selectedUser, updateUser }) => {
     profile: "",
   });
 
+  
   const handleValidate = async (name: string, value: string | File) => {
     try {
       await userSchema.validateAt(name, { [name]: value });
@@ -47,17 +49,9 @@ const FormUpdate: React.FC<FormAddProps> = ({ selectedUser, updateUser }) => {
     }
     try {
       await userSchema.validate(user, { abortEarly: false });
-      updateUser((prevUsers) => {
-        return prevUsers.map((prevUser) => {
-          if (prevUser.id === selectedUser.id) {
-            return {
-              ...prevUser,
-              ...user,
-            };
-          }
-          return prevUser;
-        });
-      });
+
+      handleUpdateUsers(user)
+    
     } catch (errors) {
       console.log("error", errors);
       const fieldErrors: { [key: string]: string } = {};

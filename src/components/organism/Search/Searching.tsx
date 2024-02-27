@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
-import React, { SetStateAction } from 'react'
-
-const SearchInput = ({setSearch}:{setSearch:React.Dispatch<SetStateAction<string>>}) => {
+import { userContext } from '@/context/UserProvider'
+import React, { useContext } from 'react'
+const SearchInput = () => {
+  const {setSearch}:any = useContext(userContext)
   
   const handleSearch = (e:React.ChangeEvent<HTMLInputElement>) =>{
+
         setSearch(e.target.value.toLowerCase())
   }
 

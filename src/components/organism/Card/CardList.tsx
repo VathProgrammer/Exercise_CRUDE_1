@@ -1,67 +1,40 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card } from "./Card";
-import { User } from "@/app/page";
+import { User } from "@/types";
+import { userContext } from "@/context/UserProvider";
 
-interface CardListProps {
-  items: User[];
-  selectCard: string;
-  onSelectCard: React.Dispatch<React.SetStateAction<string>>;
-  onDeleteCard: (id: string) => void;
-  search?: string;
-}
-
-const CardList = ({
-  items,
-  selectCard,
-  onSelectCard,
-  onDeleteCard,
-  search,
-}: CardListProps) => {
-  console.log(search);
+const CardList = ({}) => {
+  const { localUsers }: any = useContext(userContext);
+  const { search }: any = useContext(userContext);
 
   return (
     <div>
-      {/* {
-
-        items.map((item,index) =>(
-          <Card
-          id={item.id}
-          name={item.username}
-          key={item.id || index}
-          image={item.profile}
-          onSelectCard={onSelectCard}
-          selectCard={selectCard}
-          onDeleteCard={onDeleteCard}
-        ></Card>
-        ))
-      } */}
-
       {search
-        ? items.map((item, index) =>
+        ? localUsers.map((item: User, index: number) =>
             item.username.includes(search) ? (
               <Card
                 id={item.id}
-                name={item.username}
+                username={item.username}
                 key={item.id || index}
-                image={item.profile}
-                onSelectCard={onSelectCard}
-                selectCard={selectCard}
-                onDeleteCard={onDeleteCard}
+                profile={item.profile}
+                // onSelectCard={onSelectCard}
+                // selectCard={selectCard}
+                // onDeleteCard={onDeleteCard}
                 video={item.video}
               ></Card>
             ) : null
           )
-        : items.map((item, index) => (
+        : localUsers.map((item: User, index: number) => (
             <Card
               id={item.id}
-              name={item.username}
+              username={item.username}
               key={item.id || index}
-              image={item.profile}
-              onSelectCard={onSelectCard}
-              selectCard={selectCard}
+              profile={item.profile}
               video={item.video}
-              onDeleteCard={onDeleteCard}
+              // onSelectCard={onSelectCard}
+              // selectCard={selectCard}
+              // onDeleteCard={onDeleteCard}
             ></Card>
           ))}
     </div>

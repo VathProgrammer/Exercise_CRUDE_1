@@ -1,14 +1,15 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { FloatingButton } from "../Button";
+import { userContext } from "@/context/UserProvider";
 interface ModalProps {
   children?: ReactNode;
-  selectCard: string;
+
 }
 
-const Modal: React.FC<ModalProps> = ({ children, selectCard }) => {
+const Modal: React.FC<ModalProps> = ({ children}) => {
   const [isShowModal, setIsShowModal] = useState(false);
-
+  const {selectCard}:any = useContext(userContext)
   return (
     <>
       <FloatingButton
